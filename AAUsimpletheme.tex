@@ -83,22 +83,50 @@
 \end{frame}
 %%%%%%%%%%%%%%%%
 
+\section{Context}
+\begin{frame}{Context}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+        \itemsep1em
+  \item Smart meter
+  \item Smart appliances and renewable energy
+  \item Smart grid
+  \item Fine-grained power consumption data
+  \item Privacy concerns
+  \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \includegraphics[scale=.5]{graphics/smart-meter.jpg}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \section{Privacy Concerns}
-\begin{frame}{A list of concerns}{}
+\begin{frame}{A list of privacy concerns}{}
+  \begin{itemize}
+    \itemsep2em
+  \item Depends on the granularity
+  \item Household activities
+  \item Number of people home
+  \item Information about appliances - by using power signatures
+  \item Without prior knowledge?
+  \end{itemize}
 \end{frame}
 
 \section{Monitored smart meter example}
-\begin{frame}{Setup}
+\begin{frame}{Smart meter privacy issues example: Setup}
   \begin{itemize}
     \itemsep2em 
     \item 60 days of power consumption
     \item 3 homes
     \item Power activity journals(min. 3 days)
     \item TED energy monitor
+    \item SheevaPlug
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Setup}
+\begin{frame}{Privacy issues example: Setup}
   \begin{center}
   \includegraphics[scale=.5]{graphics/TED_architecture.png}  
   \end{center}
@@ -107,7 +135,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Analysis}
+\begin{frame}{Privacy issues example: Analysis}
   \begin{enumerate}
     \itemsep2em 
   \item Pre-process data using clustering alogrithm
@@ -117,18 +145,18 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Pre-process}
+\begin{frame}{Privacy issues example: Pre-process}
   \begin{enumerate}
   \item Density-based clustering(DBSCAN)
   \item Group tuples by looking at their power pattern and at what time they are measured
-  \item Output: power segmenst
+  \item Output: power segments
   \end{enumerate}
   \begin{center}
   \includegraphics[scale=.3]{graphics/weka.png}   
   \end{center}
 \end{frame}
 
-\begin{frame}{Tag events}
+\begin{frame}{Privacy issues example: Tag events}
   \begin{itemize}
   \item Each power segments gets labeled
   \item 6 tuple: (segment label, start time, average power, duration, beginning power step, shape label)
@@ -139,11 +167,11 @@
 \begin{frame}
             \begin{tikzpicture}[remember picture,overlay]
              \fill [black] (current page.south west) rectangle (current page.north east);
-             \node at (current page.center) {\includegraphics[scale=0.4]{graphics/consumption_one_day.png}};
+             \node at (current page.center) {\includegraphics[scale=0.3]{graphics/consumption_one_day.png}};
             \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Filtering}
+\begin{frame}{Privacy issues example: Filtering}
   \begin{itemize}
   \item Filter out automated appliances
   \item Identify automated appliances
@@ -157,7 +185,7 @@
   \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Map events}
+\begin{frame}{Privacy issues example: Map events}
   \begin{itemize}
   \item Prior knowledge: Activity journals
   \item Map these to clusters
@@ -172,6 +200,20 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%
+
+\begin{frame}{Requirements for a privacy enhancing architecture}
+  Electric utilities:
+  \begin{itemize}
+  \item Dynamic pricing
+  \item Tamper and energy theft alarms
+  \item Power failure and restoration notifications
+  \item Demand response for home automation
+  \end{itemize}
+  Consumer:
+  \begin{itemize}
+  \item Not revealing when and how energy is being used by a particular household
+  \end{itemize}
+\end{frame}
 
 \section{Privacy enhancing smart meter architecture}
 \begin{frame}{Components}
@@ -195,10 +237,8 @@
   \item Direct: Zero-Knowledge protocol for billing
   \end{itemize}
 \end{frame}
-%terms that maybes needs to be explained:
-% blinding cryptography
-% Zero knowledge proof
-%
+
+
 \section{Zero Knowledge Protocol}
 \begin{frame}{Zero Knowledge Protocol}
   \begin{itemize}
@@ -206,14 +246,7 @@
   \item Challenge-response authentication
   \item Authentication without telling the $secret$
   \item Interactive verification - sending a series of challenges
-  \item SOME AWESOME EXAMPLE
-  \end{itemize}
-\end{frame}
-
-\section{Blinding}
-\begin{frame}
-  \begin{itemize}
-  \item 
+  \item Public key identification example
   \end{itemize}
 \end{frame}
 
@@ -225,18 +258,27 @@
   \item Values cannot be changed
   \item Values are hidden to others
   \item Reveal phase: Reveal value and check
-  \item Coin flipping
+  \item Public key identification example continued
   \end{itemize}
 \end{frame}
 
 \section{Zero Knowledge Billing Protocol}
-\begin{frame}{Protocol}
+\begin{frame}{A zero knowledge billing protocol}
   For each billing cycle:
   \begin{enumerate}
   \item \textbf{Registration} - Commit phase: commit random tags($r_i$) and keys($k_1, \dots, k_m$) where e.g. $m = 10$
   \item \textbf{Tuple gathering} - SM creates tuples: $(r_i, t_i, p_i)$
   \item \textbf{Reconciliation} - Reveal phase: Compute bill and verify
   \end{enumerate}
+  Random spot checks
+\end{frame}
+
+\begin{frame}{Conclusion}
+  \begin{itemize}
+  \item Zero knowledge protocols are computationally expensive
+  \item Initial results
+  \item At a granularity of one minute it takes 5 minutes to verify these measurements
+  \end{itemize}
 \end{frame}
 
 {\aauwavesbg
