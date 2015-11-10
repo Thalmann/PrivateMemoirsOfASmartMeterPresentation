@@ -82,11 +82,62 @@
 \end{frame}
 %%%%%%%%%%%%%%%%
 
-\section{Empty}
-% motivation for creating this theme
-\begin{frame}{Empty}{}
+\section{Privacy Concerns}
+\begin{frame}{A list of concerns}{}
+\end{frame}
+
+\section{Monitored smart meter example}
+\begin{frame}{Setup}
+  \begin{itemize}
+    \itemsep2em 
+    \item 60 days of power consumption
+    \item 3 homes
+    \item Power activity journals(min. 3 days)
+    \item TED energy monitor
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Setup}
+  \begin{center}
+  \includegraphics[scale=.5]{graphics/TED_architecture.png}  
+  \end{center}
+  \begin{itemize}
+  \item Outputs: $(t,p)$ for each second
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Analysis}
+  \begin{enumerate}
+    \itemsep2em 
+  \item Pre-process data using clustering alogrithm
+  \item Tag power events with their characteristics
+  \item Filter out automated appliances
+  \item Map opaque labels to real-life events from external data
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Pro-process}
+  Output: power segments
+\end{frame}
+
+\begin{frame}{Tag events}
+  \begin{itemize}
+  \item Each power segments gets labeled
+  \item 6 tuple: (segment label, start time, average power, duration, beginning power step, shape label)
+  \item Answer questions
+  \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%
+
+\section{Privacy enhancing smart meter architecture}
+\begin{frame}{Components}
+  \begin{itemize}
+  \item Smart meter
+  \item Neighborhood gateways
+  \item Remote server
+  \end{itemize}
+  
+\end{frame}
 
 {\aauwavesbg
 \begin{frame}[plain,noframenumbering]
