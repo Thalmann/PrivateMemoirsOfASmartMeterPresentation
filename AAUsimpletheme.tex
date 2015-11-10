@@ -24,6 +24,7 @@
 % Or whatever. Note that the encoding and the font should match. If T1
 % does not look nice, try deleting the line with the fontenc.
 \usepackage{helvet}
+\usepackage{tikz}
 
 % colored hyperlinks
 \newcommand{\chref}[2]{%
@@ -116,8 +117,15 @@
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Pro-process}
-  Output: power segments
+\begin{frame}{Pre-process}
+  \begin{enumerate}
+  \item Density-based clustering(DBSCAN)
+  \item Group tuples by looking at their power pattern and at what time they are measured
+  \item Output: power segmenst
+  \end{enumerate}
+  \begin{center}
+  \includegraphics[scale=.3]{graphics/weka.png}   
+  \end{center}
 \end{frame}
 
 \begin{frame}{Tag events}
@@ -127,16 +135,108 @@
   \item Answer questions
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+            \begin{tikzpicture}[remember picture,overlay]
+             \fill [black] (current page.south west) rectangle (current page.north east);
+             \node at (current page.center) {\includegraphics[scale=0.4]{graphics/consumption_one_day.png}};
+            \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Filtering}
+  \begin{itemize}
+  \item Filter out automated appliances
+  \item Identify automated appliances
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill [black] (current page.south west) rectangle (current page.north east);
+    \node at (current page.center) {\includegraphics[scale=0.4]{graphics/human_presence.png}};
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Map events}
+  \begin{itemize}
+  \item Prior knowledge: Activity journals
+  \item Map these to clusters
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill [black] (current page.south west) rectangle (current page.north east);
+    \node at (current page.center) {\includegraphics[scale=0.4]{graphics/detailed.png}};
+  \end{tikzpicture}
+\end{frame}
+
 %%%%%%%%%%%%%%%%
 
 \section{Privacy enhancing smart meter architecture}
 \begin{frame}{Components}
+  Smart meter
   \begin{itemize}
-  \item Smart meter
-  \item Neighborhood gateways
-  \item Remote server
+  \item Gather fine grained power readings
+  \item (pseudo-random tuple id/tag, timestamp, power usage)
+  \item Assumpion: consumers want to tamper with SM
   \end{itemize}
-  
+  \pause
+  Neighborhood gateways
+  \begin{itemize}
+  \item Sends data without revealing source: (timestamp, power usage)
+  \item Could act as control and storage point
+  \item Assumption: Gateways are trusted and communication with SMs and utility servers is safe
+  \end{itemize}
+  \pause
+  Remote utility server
+  \begin{itemize}
+  \item Collect all the tuples from the gateways
+  \item Direct: Zero-Knowledge protocol for billing
+  \end{itemize}
+\end{frame}
+%terms that maybes needs to be explained:
+% blinding cryptography
+% Zero knowledge proof
+%
+\section{Zero Knowledge Protocol}
+\begin{frame}{Zero Knowledge Protocol}
+  \begin{itemize}
+  \item $prover$, $secret$, $verifier$
+  \item Challenge-response authentication
+  \item Authentication without telling the $secret$
+  \item Interactive verification - sending a series of challenges
+  \item SOME AWESOME EXAMPLE
+  \end{itemize}
+\end{frame}
+
+\section{Blinding}
+\begin{frame}
+  \begin{itemize}
+  \item 
+  \end{itemize}
+\end{frame}
+
+\section{Commitment Scheme}
+\begin{frame}{Commitment scheme}
+  Keep something hidden and uncahnged until one wants to reveal it.
+  \begin{itemize}
+  \item Commit phase: Commit some values
+  \item Values cannot be changed
+  \item Values are hidden to others
+  \item Reveal phase: Reveal value and check
+  \item Coin flipping
+  \end{itemize}
+\end{frame}
+
+\section{Zero Knowledge Billing Protocol}
+\begin{frame}{Protocol}
+  For each billing cycle:
+  \begin{enumerate}
+  \item \textbf{Registration} - Commit phase: commit random tags($r_i$) and keys($k_1, \dots, k_m$) where e.g. $m = 10$
+  \item \textbf{Tuple gathering} - SM creates tuples: $(r_i, t_i, p_i)$
+  \item \textbf{Reconciliation} - Reveal phase: Compute bill and verify
+  \end{enumerate}
 \end{frame}
 
 {\aauwavesbg
